@@ -2,7 +2,8 @@ require("dotenv").config();
 
 
 async function chatWithAI(message, history = [], instruction = []) {
-try {
+  try {
+  console.log("API Key:", process.env.OPENROUTER_API_KEY); // Verifica que se cargue correctamente
   let messages = [...history]
 
   instruction.map((inst) => {
@@ -11,13 +12,12 @@ try {
   })
   messages.push( { role: "user", content: message })
   // const messages = [{ role: "system", content: instruction}, ...history, { role: "user", content: message }];
-  // Petición a la IA
-  const API_KEY = "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"; // 🔥 Riesgo de seguridad
+  
 
   const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
     method: "POST",
     headers: {
-      "Authorization": `Bearer ${API_KEY}`,
+      "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
