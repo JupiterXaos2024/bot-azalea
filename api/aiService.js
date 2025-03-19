@@ -12,7 +12,7 @@ try {
   messages.push( { role: "user", content: message })
   // const messages = [{ role: "system", content: instruction}, ...history, { role: "user", content: message }];
   // Petición a la IA
-  const API_KEY = "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"; // 🔥 Riesgo de seguridad
+  const API_KEY = "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"; // 🔥 Riesgo de seguridad
 
   const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
     method: "POST",
