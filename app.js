@@ -58,7 +58,7 @@ const flowIndex = addKeyword('hola')
         } 
         
         if (category.includes('asistencia')) {
-            const instruction2 = ['Dame un mensaje corto indicando que se iniciara el modulo de asistencia.'];
+            const instruction2 = ['Dame un mensaje corto indicando que se iniciara el modulo de asistencia. tambien pide informacion para la asistencia'];
             let result2 = await chatWithAI(result.response, history, instruction2);
             await flowDynamic(result2.response);
             return gotoFlow(flowAsistencia);
