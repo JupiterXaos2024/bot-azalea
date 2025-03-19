@@ -12,10 +12,12 @@ try {
   messages.push( { role: "user", content: message })
   // const messages = [{ role: "system", content: instruction}, ...history, { role: "user", content: message }];
   // Petición a la IA
+  const API_KEY = "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"; // 🔥 Riesgo de seguridad
+
   const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
     method: "POST",
     headers: {
-      "Authorization": `Bearer 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`,
+      "Authorization": `Bearer ${API_KEY}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
