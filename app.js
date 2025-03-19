@@ -80,7 +80,13 @@ const main = async () => {
         database: adapterDB,
     });
 
-    QRPortalWeb();
+    const qrServer = QRPortalWeb();
+
+    if (qrServer && qrServer.url) {
+        console.log(`Escanea el QR en: ${qrServer.url}`);
+    } else {
+        console.log("No se pudo obtener la URL del QR.");
+    }
 };
 
 main();
