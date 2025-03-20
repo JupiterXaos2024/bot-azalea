@@ -3,13 +3,15 @@ require("dotenv").config();
 
 async function chatWithAI(message, history = [], instruction = []) {
   try {
-  console.log("API Key:", process.env.OPENROUTER_API_KEY); // Verifica que se cargue correctamente
+  // console.log("API Key:", process.env.OPENROUTER_API_KEY); // Verifica que se cargue correctamente
   let messages = [...history]
 
-  instruction.map((inst) => {
-    messages.push({ role: "system", content: inst})
-    history.push({ role: "system", content: inst})
-  })
+  if (Array.isArray(instruction) && instruction.length > 0) {
+    instruction.forEach((inst) => {
+      messages.push({ role: "system", content: inst });
+      history.push({ role: "system", content: inst });
+    });
+  }
   messages.push( { role: "user", content: message })
   // const messages = [{ role: "system", content: instruction}, ...history, { role: "user", content: message }];
   

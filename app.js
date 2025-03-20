@@ -30,7 +30,8 @@ const flowIndex = addKeyword('hola')
             'Beneficios de Unirse a PachoTuristico: Para negocios y emprendedores:✅ Inscripción gratuita en el directorio comercial (por tiempo limitado).✅ Mayor visibilidad en redes sociales y grupos de WhatsApp locales.✅ Publicación destacada en la página de Facebook de PachoTuristico.✅ Reel promocional mostrando su negocio dentro del directorio.✅ Posibilidad de ser negocio destacado del día, según el orden del sistema.✅ Acceso a eventos promocionales y ferias de emprendimiento.✅ Participación en la estrategia de turismo digital 360° (fotografía y videos inmersivos).Para turistas y visitantes:🌍Encuentran rutas, hospedajes y experiencias únicas en Pacho.🎉 Acceden a eventos exclusivos y actividades recomendadas. Reciben información detallada sobre sitios turísticos y servicios locales.📲 Pueden explorar Pacho de manera interactiva y moderna.',
             'Eventos y Actividades Especiales de PachoTuristico:📌 Ferias de emprendimiento: Espacios para que negocios locales se den a conocer.🎶 Eventos musicales y culturales: Presentaciones en vivo, festivales y más.   🤝 Campañas solidarias: Recaudación de recursos para apoyar fundaciones locales.📸 Experiencia 360°: Recorridos virtuales en 360° de los sitios turísticos más emblemáticos.',
             '🟣 Cómo Motivar la Participación: Cuando hables con posibles interesados en el directorio, usa frases como:🔹 "Tu negocio merece más visibilidad, y en PachoTuristico te la damos gratis por tiempo limitado. ¡Aprovecha esta oportunidad!"🔹 "Ser parte del directorio no solo te ayudará a atraer más clientes, sino que también te permitirá conectar con una comunidad activa y en crecimiento."🔹 "Queremos que Pacho sea un destino turístico referente, y tu negocio puede ser parte de esta gran transformación."',
-            '🟢 Llamado a la Acción:Siempre cierra las conversaciones con un llamado a la acción claro, por ejemplo:📌 "¿Te gustaría inscribir tu negocio ahora? Es gratis y toma solo unos minutos. ¡Yo te ayudo con el proceso!"📌 "¿Qué día podríamos agendar una reunión para explicarte todos los beneficios en detalle?"📌 "Te invito a visitar nuestra página oficial para conocer más: www.pachoturistico.com"']
+            '🟢 Llamado a la Acción:Siempre cierra las conversaciones con un llamado a la acción claro, por ejemplo:📌 "¿Te gustaría inscribir tu negocio ahora? Es gratis y toma solo unos minutos. ¡Yo te ayudo con el proceso!"📌 "¿Qué día podríamos agendar una reunión para explicarte todos los beneficios en detalle?"📌 "Te invito a visitar nuestra página oficial para conocer más: www.pachoturistico.com"'
+        ]
 
         const message = `${ctx.body}, mi nombre es: ${ctx.pushName}`;
         let result = await chatWithAI(message, history, instruction);
@@ -42,12 +43,12 @@ const flowIndex = addKeyword('hola')
     })
     .addAction({ capture: true }, async (ctx, { flowDynamic, gotoFlow }) => {
         const instruction = [
-            'Eres un asistente que analiza necesidades. Responde con una sola palabra clave: publicidad: si el cliente menciona marketing, ventas, directorio comercial, etc. asistencia: si el cliente requiere informacion mas personalizada. y si no puedes identificar la necesidad o el servicio no está disponible, responde con "otros".'
+            'Eres un asistente que analiza necesidades. Responde con una sola palabra clave: publicidad: si el cliente menciona marketing, ventas, directorio comercial, etc. asistencia: si el cliente requiere informacion mas personalizada o ayuda con algun tema. si no puedes identificar la necesidad o el servicio no está disponible, responde con "otros".'
         ];
 
         let result = await chatWithAI(ctx.body, history, instruction);
         history = result.updatedHistory;
-
+        console.log(result.response)
         let category = result.response ? result.response.toLowerCase() : 'otros';
 
         if (category.includes('publicidad')) {
@@ -58,7 +59,7 @@ const flowIndex = addKeyword('hola')
         } 
         
         if (category.includes('asistencia')) {
-            const instruction2 = ['Dame un mensaje corto indicando que se iniciara el modulo de asistencia. tambien pide informacion para la asistencia'];
+            const instruction2 = ['Dame un mensaje corto indicando que se iniciara el modulo de asistencia. tambien pide informacion para la asistencia teniendo en cuenta las opciones'];
             let result2 = await chatWithAI(result.response, history, instruction2);
             await flowDynamic(result2.response);
             return gotoFlow(flowAsistencia);
@@ -81,6 +82,7 @@ const main = async () => {
     });
 
     QRPortalWeb();
+    
 
     
 };
